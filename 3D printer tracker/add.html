@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Material</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+  <style>
+    body {
+      background-color: #1a1a1a; /* Black background */
+      background-image: url('background.jpg'); /* Set background image */
+      background-size: cover;
+      background-position: center;
+      color: #74de18; /* Parrot green text color */
+      font-family: Arial, sans-serif;
+    }
+    
+    h3 {
+      color: #74de18; /* Parrot green color for the heading */
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Shadow for text */
+    }
+
+    .form-label {
+      color: #74de18; /* Parrot green color for labels */
+      font-weight: bold;
+    }
+
+    .form-control {
+      background-color: #f7f1f1; /* Dark background for input fields */
+      color: #74de18; /* Parrot green text in input fields */
+      border: 1px solid #74de18; /* Parrot green border */
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    }
+
+    .form-control:focus {
+      border-color: #74de18; /* Parrot green border on focus */
+      background-color: #efe7e7; /* Slightly lighter background on focus */
+    }
+
+    .btn-success {
+      background-color: #74de18; /* Parrot green button */
+      color: #1a1a1a; /* Black text on the button */
+      border: none;
+      font-weight: bold;
+    }
+
+    .btn-success:hover {
+      background-color: #5dbd12; /* Slightly darker green on hover */
+    }
+
+    .btn-secondary {
+      background-color: #eee1e1; /* Dark button */
+      color: #74de18; /* Parrot green text on the button */
+      border: 1px solid #74de18; /* Parrot green border */
+    }
+
+    .btn-secondary:hover {
+      background-color: #c8c1c1; /* Darker button on hover */
+      color: #74de18; /* Parrot green text on hover */
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.8); /* Shadow for the form container */
+      max-width: 600px;
+      margin: 100px auto; /* Center the container */
+    }
+
+    .btn, .form-control {
+      transition: all 0.3s ease-in-out; /* Smooth transition for buttons and inputs */
+    }
+
+    .btn:hover, .form-control:focus {
+      transform: scale(1.05); /* Slight scaling effect on hover/focus */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h3 class="mb-4">Add New Material</h3>
+    <form id="addMaterialForm">
+      <div class="mb-3">
+        <label for="materialName" class="form-label">Material Name</label>
+        <input type="text" id="materialName" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label for="materialColor" class="form-label">Color</label>
+        <input type="text" id="materialColor" class="form-control" placeholder="e.g. red" required />
+      </div>
+      <div class="mb-3">
+        <label for="totalQuantity" class="form-label">Initial Quantity (grams)</label>
+        <input type="number" id="totalQuantity" class="form-control" required />
+      </div>
+      <button type="submit" class="btn btn-success w-100">Add Material</button>
+    </form>
+
+    <button class="btn btn-secondary mt-3 w-100" onclick="window.location.href='index.html'">Cancel</button>
+  </div>
+
+  <script>
+    document.getElementById('addMaterialForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('materialName').value.trim();
+      const color = document.getElementById('materialColor').value.trim();
+      const total = parseFloat(document.getElementById('totalQuantity').value);
+
+      if (name && color && !isNaN(total)) {
+        const newMaterial = {
+          name: name,
+          color: color,
+          total: total,
+          used: 0,
+          history: []
+        };
+
+        // Encode and pass back to index.html
+        const params = new URLSearchParams();
+        params.set('addMaterial', JSON.stringify(newMaterial));
+        window.location.href = 'index.html?' + params.toString();
+      } else {
+        alert('Please fill all fields correctly.');
+      }
+    });
+  </script>
+</body>
+</html>
